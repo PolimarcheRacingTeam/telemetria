@@ -1,0 +1,17 @@
+salvataggio direttamente in formato leggibile da matlab:
+https://www.mathworks.com/help/pdf_doc/matlab/matfile_format.pdf
+
+accesso ai dati via wifi per analisi dati a bordo pista
+
+telemetria controllabile remotamente: 
+suddivisione file, aggiunta di appunti, salvataggio, pausa
+aggiunta rapida di canali ADC?
+
+interfaccia telemetria a pannelli:
+pannello generale
+pannello motore
+
+frequenze diverse in base ai canali?
+l'implementazione potrebbe essere complicata, 
+da valutare se stiamo stretti con le prestazioni
+
