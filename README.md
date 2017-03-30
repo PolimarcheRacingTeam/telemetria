@@ -29,9 +29,11 @@ Il progetto può essere esportato per programmare/flashare tramite una scelta di
 2. IAR Embedded Workbench (EWARM) - soluzione professionale lots of $$$
 3. Atollic Truestudio - IDE gratuito in versione limitata, closed source, (la versione Mac deve arrivare..)
 4. System Workbench for STM32 (SW4STM32) - IDE open source basato su Eclipse, compatibilità alle schede stm32F7 aggiunta da ST stessa (https://goo.gl/rKpHgf)
+
 Altre opzioni:
-https://goo.gl/fgkwXq
+https://goo.gl/fgkwXq,
 tra cui 
+
 5. IDE (tipo Eclipse) + compiler ARM + driver ST-link , massima libertà ma ci perdi più tempo per configurare. 
 
 Leggendo in giro tipo https://goo.gl/vybkfy o https://goo.gl/o3R6Ob sono abbastanza convinto che la 4 sia la migliore per noi. Sostanzialmente è la 5 già impacchetta e cross-platform, supporta i progetti inzializzati con Cube, è gratis, open source e anche ST ha contribuito alla sua esistenza. I migliori indiscussi sono IAR e KEIL ma costano, mentre di truestudio ne parla quasi nessuno.
