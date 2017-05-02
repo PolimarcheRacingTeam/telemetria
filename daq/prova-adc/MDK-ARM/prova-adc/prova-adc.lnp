@@ -1,0 +1,28 @@
+--cpu Cortex-M7.fp.sp --fpu=FPv4-SP
+"prova-adc\startup_stm32f746xx.o"
+"prova-adc\system_stm32f7xx.o"
+"prova-adc\stm32f7xx_hal_tim.o"
+"prova-adc\stm32f7xx_hal_i2c_ex.o"
+"prova-adc\stm32f7xx_hal_adc.o"
+"prova-adc\stm32f7xx_hal_dma.o"
+"prova-adc\stm32f7xx_hal_rcc_ex.o"
+"prova-adc\stm32f7xx_hal_adc_ex.o"
+"prova-adc\stm32f7xx_hal_tim_ex.o"
+"prova-adc\stm32f7xx_hal.o"
+"prova-adc\stm32f7xx_hal_flash.o"
+"prova-adc\stm32f7xx_hal_dma_ex.o"
+"prova-adc\stm32f7xx_hal_i2c.o"
+"prova-adc\stm32f7xx_hal_pwr_ex.o"
+"prova-adc\stm32f7xx_hal_rcc.o"
+"prova-adc\stm32f7xx_hal_cortex.o"
+"prova-adc\stm32f7xx_hal_gpio.o"
+"prova-adc\stm32f7xx_hal_flash_ex.o"
+"prova-adc\stm32f7xx_hal_pwr.o"
+"prova-adc\stm32f7xx_it.o"
+"prova-adc\stm32f7xx_hal_msp.o"
+"prova-adc\main.o"
+--library_type=microlib --strict --scatter "prova-adc\prova-adc.sct"
+
+--diag_suppress=L6329 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "prova-adc.map" -o prova-adc\prova-adc.axf
