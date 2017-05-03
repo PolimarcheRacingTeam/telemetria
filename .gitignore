@@ -1,4 +1,5 @@
-
+Debug/
+*/Release/*
 .metadata
 
 imu/lsm9ds1-tests/Debug
