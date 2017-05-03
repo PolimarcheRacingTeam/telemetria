@@ -34,10 +34,12 @@
 #include "main.h"
 #include "stm32f7xx_hal.h"
 #include "i2c.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "string.h"
+#include "stdlib.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -50,9 +52,9 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void Error_Handler(void);
-
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
+void print(char*, uint16_t);
 
 /* USER CODE END PFP */
 
@@ -78,9 +80,18 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_I2C1_Init();
+  MX_USART3_UART_Init();
 
   /* USER CODE BEGIN 2 */
-
+  char msg[32];
+  IMU_Configure();
+  if(IMU_Ok()){
+      sprintf(msg,"bene\n");
+  } else {
+      sprintf(msg,"male\n");
+  }
+  print(msg, 5);
+  int16_t a[3];
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -88,7 +99,10 @@ int main(void)
   while (1)
   {
   /* USER CODE END WHILE */
-
+      while(HAL_GPIO_ReadPin(USER_Btn_GPIO_Port,USER_Btn_Pin)==GPIO_PIN_RESET);
+      IMU_Read_Accel(a);
+      sprintf(msg, "ax=%d\tay=%d\taz=%d\r\n",a[0],a[1],a[2]);
+      print(msg, strlen(msg));
   /* USER CODE BEGIN 3 */
 
   }
@@ -136,7 +150,8 @@ void SystemClock_Config(void)
     Error_Handler();
   }
 
-  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_I2C1;
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USART3|RCC_PERIPHCLK_I2C1;
+  PeriphClkInitStruct.Usart3ClockSelection = RCC_USART3CLKSOURCE_PCLK1;
   PeriphClkInitStruct.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PCLK1;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
@@ -156,6 +171,10 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void print(char* data, uint16_t len){
+  HAL_UART_Transmit(&huart3,(uint8_t*)data, len, HAL_MAX_DELAY);
+}
 
 /* USER CODE END 4 */
 
