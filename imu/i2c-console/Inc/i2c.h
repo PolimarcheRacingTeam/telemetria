@@ -49,7 +49,11 @@
 extern I2C_HandleTypeDef hi2c1;
 
 /* USER CODE BEGIN Private defines */
-
+#define IMU_ADDR 	0xD6
+#define IMU_ACCEL_DATA	0x28
+#define IMU_ACCEL_CTRL  0x1F
+#define IMU_GYRO_DATA   0x18
+#define IMU_GYRO_CTRL	0x10
 /* USER CODE END Private defines */
 
 extern void Error_Handler(void);
@@ -57,6 +61,11 @@ extern void Error_Handler(void);
 void MX_I2C1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
+void IMU_Write(uint8_t* data, uint8_t size, uint8_t addr);
+void IMU_Read(uint8_t* data, uint8_t size, uint8_t addr);
+void IMU_Configure();
+void IMU_Read_Accel(int16_t* data);
+uint8_t IMU_Ok();
 
 /* USER CODE END Prototypes */
 

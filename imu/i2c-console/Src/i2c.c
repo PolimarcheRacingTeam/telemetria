@@ -48,7 +48,7 @@ void MX_I2C1_Init(void)
 {
 
   hi2c1.Instance = I2C1;
-  hi2c1.Init.Timing = 0x0000020B;
+  hi2c1.Init.Timing = 0x2000090E;
   hi2c1.Init.OwnAddress1 = 0;
   hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
   hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -130,6 +130,44 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
 } 
 
 /* USER CODE BEGIN 1 */
+
+void IMU_Read(uint8_t* data, uint8_t size, uint8_t addr){
+  HAL_I2C_Mem_Read(&hi2c1, IMU_ADDR, addr, I2C_MEMADD_SIZE_8BIT, data, size, HAL_MAX_DELAY);
+}
+
+
+void IMU_Write(uint8_t* data, uint8_t size, uint8_t addr){
+  HAL_I2C_Mem_Write(&hi2c1, IMU_ADDR, addr, I2C_MEMADD_SIZE_8BIT, data, size, HAL_MAX_DELAY);
+}
+
+
+/*
+void IMU_Configure(){
+  uint8_t gyroSettings[1] = {0xD8};
+  IMU_Write(gyroSettings, 1, IMU_GYRO_CTRL);
+  uint8_t accelSettings[2] = {0x38 ,0xD8};
+  IMU_Write(accelSettings, 2, IMU_ACCEL_CTRL);
+}*/
+
+void IMU_Configure(){
+  uint8_t val = 0xD8;
+  HAL_I2C_Mem_Write(&hi2c1, IMU_ADDR, IMU_GYRO_CTRL, I2C_MEMADD_SIZE_8BIT, &val, 1, HAL_MAX_DELAY);
+  val = 0x38;
+  HAL_I2C_Mem_Write(&hi2c1, IMU_ADDR, 0x1F, I2C_MEMADD_SIZE_8BIT, &val, 1, HAL_MAX_DELAY);
+  val = 0xD8;
+  HAL_I2C_Mem_Write(&hi2c1, IMU_ADDR, 0x20, I2C_MEMADD_SIZE_8BIT, &val, 1, HAL_MAX_DELAY);
+
+}
+
+void IMU_Read_Accel(int16_t* data){
+  IMU_Read((uint8_t*)data, 6, IMU_ACCEL_DATA);
+}
+
+uint8_t IMU_Ok(){
+  uint8_t wai;
+  IMU_Read(&wai,1,0xF);
+  return wai == 0x68;
+}
 
 /* USER CODE END 1 */
 
