@@ -6,4 +6,5 @@ Debug/
 
 RemoteSystemsTempFiles
 
+uart/prova-uart-dma/*
 imu/lsm9ds1-tests/Debug
