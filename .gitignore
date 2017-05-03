@@ -1,5 +1,9 @@
 Debug/
+
 */Release/*
 .metadata
+.settings
+
+RemoteSystemsTempFiles
 
 imu/lsm9ds1-tests/Debug
