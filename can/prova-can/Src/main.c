@@ -57,7 +57,7 @@ static void MX_USART3_UART_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-
+void print(char*,int16_t);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -85,7 +85,25 @@ int main(void)
   MX_USART3_UART_Init();
 
   /* USER CODE BEGIN 2 */
+  char msg[20];
+  print("go\r\n",4);
 
+  CAN_FilterConfTypeDef filt;
+  filt.BankNumber = 0;
+  filt.FilterNumber = 0;
+  filt.FilterScale = CAN_FILTERSCALE_32BIT;
+  filt.FilterActivation = ENABLE;
+  filt.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+  filt.FilterIdHigh= 0x0000;
+  filt.FilterIdLow = 0x0000;
+  filt.FilterMaskIdHigh	= 0x0000;
+  filt.FilterMaskIdLow	= 0x0000;
+  filt.FilterMode = CAN_FILTERMODE_IDMASK;
+
+
+  HAL_CAN_ConfigFilter(&hcan1, &filt);
+
+  print("confd\r\n",7);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -95,6 +113,18 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+      HAL_CAN_Receive(&hcan1,CAN_FIFO0, HAL_MAX_DELAY);
+      print("rcvd\r\n",6);
+      HAL_GPIO_TogglePin(LDG_GPIO_Port,LDG_Pin);
+      if(hcan1.pRxMsg->StdId==0x100){
+	  for (int i = 0; i < 8; ++i) {
+	      sprintf(msg, "0x%02x\t", hcan1.pRxMsg->Data[i]);
+	      print(msg, 5);
+	  }
+	  print("\r\n",2);
+      }
+
+
 
   }
   /* USER CODE END 3 */
@@ -168,8 +198,8 @@ static void MX_CAN1_Init(void)
   hcan1.Init.Prescaler = 1;
   hcan1.Init.Mode = CAN_MODE_NORMAL;
   hcan1.Init.SJW = CAN_SJW_3TQ;
-  hcan1.Init.BS1 = CAN_BS1_13TQ;
-  hcan1.Init.BS2 = CAN_BS2_2TQ;
+  hcan1.Init.BS1 = CAN_BS1_6TQ;
+  hcan1.Init.BS2 = CAN_BS2_1TQ;
   hcan1.Init.TTCM = DISABLE;
   hcan1.Init.ABOM = DISABLE;
   hcan1.Init.AWUM = DISABLE;
@@ -239,7 +269,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOG_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_14|GPIO_PIN_7, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LDG_Pin|LDB_Pin|LDR_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOG, GPIO_PIN_6, GPIO_PIN_RESET);
@@ -266,8 +296,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB0 PB14 PB7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_14|GPIO_PIN_7;
+  /*Configure GPIO pins : LDG_Pin LDB_Pin LDR_Pin */
+  GPIO_InitStruct.Pin = LDG_Pin|LDB_Pin|LDR_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -319,7 +349,9 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void print(char* data, int16_t len){
+  HAL_UART_Transmit(&huart3,(uint8_t*)data, len, HAL_MAX_DELAY);
+}
 /* USER CODE END 4 */
 
 /**

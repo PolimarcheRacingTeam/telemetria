@@ -41,6 +41,13 @@
 
 /* Private define ------------------------------------------------------------*/
 
+#define LDG_Pin GPIO_PIN_0
+#define LDG_GPIO_Port GPIOB
+#define LDB_Pin GPIO_PIN_14
+#define LDB_GPIO_Port GPIOB
+#define LDR_Pin GPIO_PIN_7
+#define LDR_GPIO_Port GPIOB
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
