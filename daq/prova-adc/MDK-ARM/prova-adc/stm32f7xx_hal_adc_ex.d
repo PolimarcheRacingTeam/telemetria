@@ -30,3 +30,5 @@ prova-adc\stm32f7xx_hal_adc_ex.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_
 prova-adc\stm32f7xx_hal_adc_ex.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_i2c_ex.h
 prova-adc\stm32f7xx_hal_adc_ex.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pwr.h
 prova-adc\stm32f7xx_hal_adc_ex.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pwr_ex.h
+prova-adc\stm32f7xx_hal_adc_ex.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h
+prova-adc\stm32f7xx_hal_adc_ex.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h

@@ -18,6 +18,7 @@
 "prova-adc\stm32f7xx_hal_gpio.o"
 "prova-adc\stm32f7xx_hal_flash_ex.o"
 "prova-adc\stm32f7xx_hal_pwr.o"
+"prova-adc\stm32f7xx_hal_uart.o"
 "prova-adc\stm32f7xx_it.o"
 "prova-adc\stm32f7xx_hal_msp.o"
 "prova-adc\main.o"
