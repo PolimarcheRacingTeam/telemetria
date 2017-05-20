@@ -91,19 +91,19 @@ int main(void)
   CAN_FilterConfTypeDef filt;
   filt.BankNumber = 0;
   filt.FilterNumber = 0;
-  filt.FilterScale = CAN_FILTERSCALE_32BIT;
+  filt.FilterScale = CAN_FILTERSCALE_16BIT;
   filt.FilterActivation = ENABLE;
   filt.FilterFIFOAssignment = CAN_FILTER_FIFO0;
-  filt.FilterIdHigh= 0x0000;
-  filt.FilterIdLow = 0x0000;
-  filt.FilterMaskIdHigh	= 0x0000;
-  filt.FilterMaskIdLow	= 0x0000;
-  filt.FilterMode = CAN_FILTERMODE_IDMASK;
-
+  filt.FilterIdHigh= 0x0100<<5;
+  filt.FilterMode = CAN_FILTERMODE_IDLIST;
 
   HAL_CAN_ConfigFilter(&hcan1, &filt);
 
   print("confd\r\n",7);
+
+
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -114,17 +114,24 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
       HAL_CAN_Receive(&hcan1,CAN_FIFO0, HAL_MAX_DELAY);
+      hcan1.pTxMsg->StdId = 0x11;
+      hcan1.pTxMsg->RTR = CAN_RTR_DATA;
+      hcan1.pTxMsg->IDE = CAN_ID_STD;
+      hcan1.pTxMsg->DLC = 2;
+      hcan1.pTxMsg->Data[0] = 0xCA;
+      hcan1.pTxMsg->Data[1] = 0xFE;
+      HAL_CAN_Transmit(&hcan1,HAL_MAX_DELAY);
+      HAL_Delay(500);
       print("rcvd\r\n",6);
       HAL_GPIO_TogglePin(LDG_GPIO_Port,LDG_Pin);
       if(hcan1.pRxMsg->StdId==0x100){
-	  for (int i = 0; i < 8; ++i) {
+	  for (int i = 0; i < hcan1.pRxMsg->DLC; ++i) {
 	      sprintf(msg, "0x%02x\t", hcan1.pRxMsg->Data[i]);
 	      print(msg, 5);
 	  }
 	  print("\r\n",2);
+
       }
-
-
 
   }
   /* USER CODE END 3 */
