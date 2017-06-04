@@ -45,8 +45,6 @@ TIM_HandleTypeDef htim2;
 
 UART_HandleTypeDef huart3;
 
-uint8_t volatile convCompleted = 0;
-
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
@@ -73,11 +71,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	char msg[20];
-	uint16_t rawValues[3];
-  float temp; 
-	
-	
+	char msg1[20];
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -96,7 +90,8 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 	HAL_TIM_Base_Start(&htim2);
-	//HAL_ADC_Start_DMA(&hadc1, (uint32_t*)rawValues, 3); 
+	HAL_TIM_Base_Start_IT(&htim2); 
+	HAL_ADC_Start_IT(&hadc1); 
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -106,21 +101,8 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-	while(!convCompleted);
-		
-		for(uint8_t i=0; i<hadc1.Init.NbrOfConversion; i++){
-		temp = ((float)rawValues[i]) / 4095 * 3300;
-		temp = ((temp - 760.0) / 2.5) + 25;
-			
-		sprintf(msg, "rawValue %d: %hu\r\n", i, rawValues[i]);
-		HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
-			
-		sprintf(msg, "Temperature %d: %f\r\n",i, temp);
-		HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
-			
-		}
-		 convCompleted = 0;
-		
+		HAL_GPIO_TogglePin(GPIOB, LD1_Pin);
+		HAL_Delay(250);
   }
   /* USER CODE END 3 */
 
@@ -199,7 +181,7 @@ static void MX_ADC1_Init(void)
     /**Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion) 
     */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV8;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.ScanConvMode = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
@@ -208,7 +190,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ExternalTrigConv = ADC_EXTERNALTRIGCONV_T2_TRGO;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.NbrOfConversion = 1;
-  hadc1.Init.DMAContinuousRequests = ENABLE;
+  hadc1.Init.DMAContinuousRequests = DISABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
@@ -251,7 +233,7 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
 
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
   {
@@ -410,6 +392,8 @@ void Error_Handler(void)
   /* User can add his own implementation to report the HAL error return state */
   while(1) 
   {
+		HAL_GPIO_TogglePin(GPIOB, LD3_Pin);
+		HAL_Delay(100);
   }
   /* USER CODE END Error_Handler */ 
 }

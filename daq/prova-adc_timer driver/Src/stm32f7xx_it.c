@@ -37,13 +37,16 @@
 
 /* USER CODE BEGIN 0 */
 
+uint16_t rawValue;
+char msg[20];
+float temp; 
+
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
 extern ADC_HandleTypeDef hadc1;
 extern TIM_HandleTypeDef htim2;
 extern UART_HandleTypeDef huart3;
-extern volatile uint8_t convCompleted;
 
 /******************************************************************************/
 /*            Cortex-M7 Processor Interruption and Exception Handlers         */ 
@@ -95,7 +98,9 @@ void TIM2_IRQHandler(void)
   /* USER CODE END TIM2_IRQn 0 */
   HAL_TIM_IRQHandler(&htim2);
   /* USER CODE BEGIN TIM2_IRQn 1 */
-
+	sprintf(msg, "TIM2");
+	HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
+	HAL_GPIO_TogglePin(GPIOB, LD2_Pin);
   /* USER CODE END TIM2_IRQn 1 */
 }
 
@@ -109,13 +114,26 @@ void USART3_IRQHandler(void)
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);
   /* USER CODE BEGIN USART3_IRQn 1 */
-
   /* USER CODE END USART3_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
-	convCompleted = 1;
-}
+	
+		HAL_GPIO_TogglePin(GPIOB, LD3_Pin);
+		rawValue=HAL_ADC_GetValue(&hadc1);
+	
+		temp = ((float)rawValue) / 4095 * 3300;
+		temp = ((temp - 760.0) / 2.5) + 25;
+			
+		sprintf(msg, "rawValue: %hu\r\n", rawValue);
+		HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
+
+			
+		sprintf(msg, "Temperature: %f\r\n", temp);
+		HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
+
+		}
+
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
