@@ -722,7 +722,7 @@ int mpu_read_reg(unsigned char reg, unsigned char *data)
  *  @param[in]  int_param   Platform-specific parameters to interrupt API.
  *  @return     0 if successful.
  */
-int mpu_init(struct int_param_s *int_param)
+int mpu_init()
 {
     unsigned char data[6];
 
@@ -782,10 +782,6 @@ int mpu_init(struct int_param_s *int_param)
     if (mpu_configure_fifo(0))
         return -1;
 
-#ifndef EMPL_TARGET_STM32F4    
-    if (int_param)
-        reg_int_cb(int_param);
-#endif
 
 #ifdef AK89xx_SECONDARY
     setup_compass();

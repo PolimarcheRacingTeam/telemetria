@@ -151,7 +151,7 @@ int I2C_WriteRegister(  unsigned char slave_addr,
 						unsigned short len,
 						unsigned char *data_ptr)
 {
-  return HAL_I2C_Mem_Write(&hi2c1, slave_addr, reg_addr, I2C_MEMADD_SIZE_8BIT,
+	return HAL_I2C_Mem_Write(&hi2c1, slave_addr<<1, reg_addr, I2C_MEMADD_SIZE_8BIT,
 		  data_ptr, len, HAL_MAX_DELAY);
 }
 
@@ -161,7 +161,7 @@ int I2C_ReadRegister(  unsigned char slave_addr,
 					   unsigned char *data_ptr)
 {
 
-  return HAL_I2C_Mem_Read(&hi2c1, slave_addr, reg_addr, I2C_MEMADD_SIZE_8BIT,
+  return HAL_I2C_Mem_Read(&hi2c1, slave_addr<<1, reg_addr, I2C_MEMADD_SIZE_8BIT,
 		  data_ptr, len, HAL_MAX_DELAY);
 
 }

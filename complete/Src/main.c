@@ -66,7 +66,7 @@
 #include "dashboard.h"
 #include "telemetry.h"
 #include "logging.h"
-
+#include "imu.h"
 //#include "logging.c"
 /* USER CODE END Includes */
 
@@ -128,9 +128,13 @@ int main(void)
   /* USER CODE BEGIN 2 */
   RetargetInit(&huart3); //per usare printf
   printf("\n");
-  setupBuffers();
+
+  imuInit();
+
+  //setupBuffers();
   //testSDCard();
 
+  /*
   osThreadDef(blink, blinkThread, osPriorityNormal, 0, 100);
   osThreadCreate(osThread(blink), NULL);
 
@@ -139,7 +143,7 @@ int main(void)
 
   osThreadDef(tele, telemetryThread, osPriorityNormal, 0, 500);
   osThreadCreate(osThread(tele), NULL);
-
+	*/
 
   /* USER CODE END 2 */
 
