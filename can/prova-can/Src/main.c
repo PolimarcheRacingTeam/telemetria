@@ -103,7 +103,7 @@ int main(void)
 
   print("confd\r\n",7);
 
-
+  int i=0;
 
 
   /* USER CODE END 2 */
@@ -115,26 +115,67 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-      HAL_CAN_Receive(&hcan1,CAN_FIFO0, HAL_MAX_DELAY);
-      hcan1.pTxMsg->StdId = 0x11;
+      hcan1.pTxMsg->StdId = 2;
       hcan1.pTxMsg->RTR = CAN_RTR_DATA;
       hcan1.pTxMsg->IDE = CAN_ID_STD;
-      hcan1.pTxMsg->DLC = 2;
-      hcan1.pTxMsg->Data[0] = 0xCA;
-      hcan1.pTxMsg->Data[1] = 0xFE;
+      hcan1.pTxMsg->DLC = 8;
+      hcan1.pTxMsg->Data[0] = 0x0;
+      hcan1.pTxMsg->Data[1] = 0x1;
+      hcan1.pTxMsg->Data[2] = 0x0;
+      hcan1.pTxMsg->Data[3] = 0x2;
+      hcan1.pTxMsg->Data[4] = 0x0;
+      hcan1.pTxMsg->Data[5] = 0x3;
+      hcan1.pTxMsg->Data[6] = 0x0;
+      hcan1.pTxMsg->Data[7] = 0x4;
+
       HAL_CAN_Transmit(&hcan1,HAL_MAX_DELAY);
-      HAL_Delay(500);
-      print("rcvd\r\n",6);
-      HAL_GPIO_TogglePin(LDG_GPIO_Port,LDG_Pin);
-      if(hcan1.pRxMsg->StdId==0x100){
-	  for (int i = 0; i < hcan1.pRxMsg->DLC; ++i) {
-	      sprintf(msg, "0x%02x\t", hcan1.pRxMsg->Data[i]);
-	      print(msg, 5);
-	  }
-	  print("\r\n",2);
 
-      }
+      hcan1.pTxMsg->StdId = 3;
+      hcan1.pTxMsg->RTR = CAN_RTR_DATA;
+      hcan1.pTxMsg->IDE = CAN_ID_STD;
+      hcan1.pTxMsg->DLC = 8;
+      hcan1.pTxMsg->Data[0] = 0x0;
+      hcan1.pTxMsg->Data[1] = 0x5;
+      hcan1.pTxMsg->Data[2] = 0x0;
+      hcan1.pTxMsg->Data[3] = 0x6;
+      hcan1.pTxMsg->Data[4] = 0x0;
+      hcan1.pTxMsg->Data[5] = 0x7;
+      hcan1.pTxMsg->Data[6] = 0x0;
+      hcan1.pTxMsg->Data[7] = 0x8;
+      HAL_CAN_Transmit(&hcan1,HAL_MAX_DELAY);
 
+      hcan1.pTxMsg->StdId = 4;
+      hcan1.pTxMsg->RTR = CAN_RTR_DATA;
+      hcan1.pTxMsg->IDE = CAN_ID_STD;
+      hcan1.pTxMsg->DLC = 8;
+      hcan1.pTxMsg->Data[0] = 0x0;
+      hcan1.pTxMsg->Data[1] = 0x9;
+      hcan1.pTxMsg->Data[2] = 0x0;
+      hcan1.pTxMsg->Data[3] = 0x5;
+      hcan1.pTxMsg->Data[4] = 0x0;
+      hcan1.pTxMsg->Data[5] = 0xB;
+      hcan1.pTxMsg->Data[6] = 0x0;
+      hcan1.pTxMsg->Data[7] = 0xC;
+      HAL_CAN_Transmit(&hcan1,HAL_MAX_DELAY);
+
+      hcan1.pTxMsg->StdId = 5;
+      hcan1.pTxMsg->RTR = CAN_RTR_DATA;
+      hcan1.pTxMsg->IDE = CAN_ID_STD;
+      hcan1.pTxMsg->DLC = 8;
+      hcan1.pTxMsg->Data[0] = 0x0;
+      hcan1.pTxMsg->Data[1] = 0xD;
+      hcan1.pTxMsg->Data[2] = 0x0;
+      hcan1.pTxMsg->Data[3] = 0xE;
+      hcan1.pTxMsg->Data[4] = 0x0;
+      hcan1.pTxMsg->Data[5] = 0xF;
+      hcan1.pTxMsg->Data[6] = 0x0;
+      hcan1.pTxMsg->Data[7] = 0x0;
+      HAL_CAN_Transmit(&hcan1,HAL_MAX_DELAY);
+      HAL_Delay(5);
+
+      if  (i%100==0)
+	HAL_GPIO_TogglePin(LDG_GPIO_Port,LDG_Pin);
+      i++;
   }
   /* USER CODE END 3 */
 

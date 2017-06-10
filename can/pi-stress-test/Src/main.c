@@ -95,15 +95,16 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
       print(string, 10);
-      HAL_GPIO_TogglePin(LDB_GPIO_Port, LDB_Pin);
-      hcan1.pTxMsg->StdId = 0x11;
+      if (i%2) //ogni blink del LED sono 2 pacchetti da 8 byte
+       HAL_GPIO_TogglePin(LDG_GPIO_Port, LDG_Pin);
+      hcan1.pTxMsg->StdId = 0x10 << (i%4);
       hcan1.pTxMsg->RTR = CAN_RTR_DATA;
       hcan1.pTxMsg->IDE = CAN_ID_STD;
       hcan1.pTxMsg->DLC = 8;
       memcpy(hcan1.pTxMsg->Data, (uint8_t*)&i, 8);
       HAL_CAN_Transmit(&hcan1,HAL_MAX_DELAY);
       i++;
-      HAL_Delay(1);
+      HAL_Delay(250);
   }
   /* USER CODE END 3 */
 
