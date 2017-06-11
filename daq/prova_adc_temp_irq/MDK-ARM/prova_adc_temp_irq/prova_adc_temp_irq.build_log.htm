@@ -22,20 +22,21 @@ Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
 C:\Users\mike_\Documents\GitHub\telemetria-2017\daq\prova_adc_temp_irq\MDK-ARM\prova_adc_temp_irq.uvprojx
-Project File Date:  05/14/2017
+Project File Date:  06/04/2017
 
 <h2>Output:</h2>
 Build target 'prova_adc_temp_irq'
-compiling main.c...
 compiling stm32f7xx_it.c...
-../Src/stm32f7xx_it.c(94): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-        temp = ((temp - 760.0) / 2.5) + 25;
-../Src/stm32f7xx_it.c(97): warning:  #223-D: function "strlen" declared implicitly
+../Src/stm32f7xx_it.c(87): warning:  #223-D: function "strlen" declared implicitly
         HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
-../Src/stm32f7xx_it.c: 2 warnings, 0 errors
+../Src/stm32f7xx_it.c(97): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+        temp = ((temp - 760.0) / 2.5) + 25;
+../Src/stm32f7xx_it.c(100): warning:  #223-D: function "strlen" declared implicitly
+        HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
+../Src/stm32f7xx_it.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=11824 RO-data=512 RW-data=8 ZI-data=1208  
-"prova_adc_temp_irq\prova_adc_temp_irq.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=11960 RO-data=512 RW-data=16 ZI-data=1232  
+"prova_adc_temp_irq\prova_adc_temp_irq.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 

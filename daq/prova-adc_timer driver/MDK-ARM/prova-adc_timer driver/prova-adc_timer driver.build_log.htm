@@ -26,13 +26,17 @@ Project File Date:  06/04/2017
 
 <h2>Output:</h2>
 Build target 'prova-adc_timer driver'
-compiling main.c...
-../Src/main.c(74): warning:  #177-D: variable "msg1" was declared but never referenced
-        char msg1[20];
-../Src/main.c: 1 warning, 0 errors
+compiling stm32f7xx_it.c...
+../Src/stm32f7xx_it.c(102): warning:  #223-D: function "strlen" declared implicitly
+        HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
+../Src/stm32f7xx_it.c(127): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+                temp = ((temp - 760.0) / 2.5) + 25;
+../Src/stm32f7xx_it.c(130): warning:  #223-D: function "strlen" declared implicitly
+                HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
+../Src/stm32f7xx_it.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=13596 RO-data=512 RW-data=16 ZI-data=1296  
-"prova-adc_timer driver\prova-adc_timer driver.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=13824 RO-data=512 RW-data=16 ZI-data=1296  
+"prova-adc_timer driver\prova-adc_timer driver.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 

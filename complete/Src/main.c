@@ -49,6 +49,7 @@
 #include "main.h"
 #include "stm32f7xx_hal.h"
 #include "cmsis_os.h"
+#include "adc.h"
 #include "can.h"
 #include "fatfs.h"
 #include "i2c.h"
@@ -123,7 +124,8 @@ int main(void)
   MX_USART2_UART_Init();
   MX_SDMMC1_SD_Init();
   MX_I2C1_Init();
-
+  MX_ADC1_Init();
+  MX_ADC2_Init();
 
   /* USER CODE BEGIN 2 */
   RetargetInit(&huart3); //per usare printf

@@ -36,12 +36,16 @@
 #include "stm32f7xx_it.h"
 
 /* USER CODE BEGIN 0 */
+extern  UART_HandleTypeDef huart3;
 
+char msg[20];
+uint16_t rawValue; 
+float temp;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
 extern ADC_HandleTypeDef hadc1;
-extern UART_HandleTypeDef huart3;
+
 
 /******************************************************************************/
 /*            Cortex-M7 Processor Interruption and Exception Handlers         */ 
@@ -79,16 +83,15 @@ void ADC_IRQHandler(void)
   /* USER CODE END ADC_IRQn 0 */
   HAL_ADC_IRQHandler(&hadc1);
   /* USER CODE BEGIN ADC_IRQn 1 */
-	
+	sprintf(msg, "ADC_IRQ");
+	HAL_UART_Transmit(&huart3, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
+	HAL_ADC_Start(&hadc1);
   /* USER CODE END ADC_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) 
 	{
-	char msg[20];
-	uint16_t rawValue; 
-	float temp;
 	rawValue = HAL_ADC_GetValue(&hadc1);
 	temp = ((float)rawValue) / 4095 * 3300;
 	temp = ((temp - 760.0) / 2.5) + 25;
