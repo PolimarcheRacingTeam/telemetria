@@ -60,14 +60,14 @@
 
 /* USER CODE BEGIN Includes */
 
-#include "inv_mpu.h"
-#include "inv_mpu_dmp_motion_driver.h"
-#include "databuffer.h"
-#include "retarget.h"
-#include "dashboard.h"
-#include "telemetry.h"
-#include "logging.h"
-#include "imu.h"
+//#include "inv_mpu.h"
+//#include "inv_mpu_dmp_motion_driver.h"
+//#include "databuffer.h"
+//#include "retarget.h"
+//#include "dashboard.h"
+//#include "telemetry.h"
+//#include "logging.h"
+//#include "imu.h"
 //#include "logging.c"
 /* USER CODE END Includes */
 
@@ -128,18 +128,18 @@ int main(void)
   MX_ADC2_Init();
 
   /* USER CODE BEGIN 2 */
-  RetargetInit(&huart3); //per usare printf
+  //RetargetInit(&huart3); //per usare printf
   printf("\n");
 
-  imuInit();
+  //imuInit();
 
   //setupBuffers();
   //testSDCard();
 
-  /*
+ 
   osThreadDef(blink, blinkThread, osPriorityNormal, 0, 100);
   osThreadCreate(osThread(blink), NULL);
-
+	/*
   osThreadDef(dashboard, dashboardThread, osPriorityNormal, 0, 300);
   osThreadCreate(osThread(dashboard), NULL);
 
@@ -251,7 +251,7 @@ void SystemClock_Config(void)
 void blinkThread(void const *argument){
 	uint16_t delay = 500; /* Default delay */
 	while(1) {
-		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+		HAL_GPIO_TogglePin(GPIOB, LD2_Pin);
 		osDelay(delay);
   }
   osThreadTerminate(NULL);

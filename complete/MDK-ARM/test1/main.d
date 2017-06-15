@@ -107,8 +107,3 @@ test1\main.o: ../Middlewares/Third_Party/LwIP/src/include/lwip/tcpip.h
 test1\main.o: ../Inc/sdmmc.h
 test1\main.o: ../Inc/usart.h
 test1\main.o: ../Inc/gpio.h
-test1\main.o: ../Inc/inv_mpu.h
-test1\main.o: ../Inc/inv_mpu_dmp_motion_driver.h
-test1\main.o: ../Inc/databuffer.h
-test1\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
-test1\main.o: ../Inc/retarget.h
