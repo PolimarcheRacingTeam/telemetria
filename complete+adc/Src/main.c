@@ -127,7 +127,6 @@ int main(void)
   MX_SDMMC1_SD_Init();
   MX_I2C1_Init();
   MX_ADC1_Init();
-  MX_ADC2_Init();
 
   /* USER CODE BEGIN 2 */
   //RetargetInit(&huart3); //per usare printf

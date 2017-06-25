@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=C:/Users/mike_/Documents/GitHub/telemetria-2017/complete/Inc
+HeaderPath=C:/Users/mike_/Documents/GitHub/telemetria-2017/complete+adc/Inc
 HeaderFiles=FreeRTOSConfig.h;stm32f7xx_it.h;stm32f7xx_hal_conf.h;main.h;gpio.h;can.h;ffconf.h;bsp_driver_sd.h;fatfs.h;i2c.h;lwip.h;lwipopts.h;ethernetif.h;sdmmc.h;usart.h;adc.h;
-SourcePath=C:/Users/mike_/Documents/GitHub/telemetria-2017/complete/Src
+SourcePath=C:/Users/mike_/Documents/GitHub/telemetria-2017/complete+adc/Src
 SourceFiles=FreeRTOSConfig.h;stm32f7xx_it.h;stm32f7xx_hal_conf.h;main.h;freertos.c;stm32f7xx_it.c;stm32f7xx_hal_msp.c;stm32f7xx_hal_timebase_TIM.c;main.c;gpio.h;can.h;ffconf.h;bsp_driver_sd.h;fatfs.h;i2c.h;lwip.h;lwipopts.h;ethernetif.h;sdmmc.h;usart.h;gpio.c;can.c;bsp_driver_sd.c;fatfs.c;i2c.c;lwip.c;ethernetif.c;sdmmc.c;usart.c;adc.h;adc.c;
 
 [PreviousLibFiles]

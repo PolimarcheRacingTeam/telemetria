@@ -36,14 +36,13 @@
 #include "stm32f7xx_it.h"
 
 /* USER CODE BEGIN 0 */
-
+extern uint8_t convCompleted;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_adc1;
 extern ADC_HandleTypeDef hadc1;
 extern UART_HandleTypeDef huart3;
-extern uint8_t convCompleted;
 
 /******************************************************************************/
 /*            Cortex-M7 Processor Interruption and Exception Handlers         */ 
