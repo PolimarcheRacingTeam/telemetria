@@ -54,47 +54,60 @@ static void samplingThread(void const *arg){
 	
 
     while(1){
+    	printf("ADCThread started\n");
     		
 			//Starting ADC1
 			HAL_ADC_Start(&hadc1);	
+			printf("HAL ADC START done\n");
 			
 			
 			// Polling CHANNEL 01
 			HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY); 
+			printf("done polling ch1\n");
 			adcValue1 = HAL_ADC_GetValue(&hadc1);
-			
+			printf("got ch1\n");
+			printf("adc1ch01: %d\n",adcValue1);
 			// Polling CHANNEL 02
 			HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY); 
 			adcValue2 = HAL_ADC_GetValue(&hadc1);
-		
+			printf("got ch2\n");
+
 			// Polling CHANNEL 03
 			HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY); 
 			adcValue3 = HAL_ADC_GetValue(&hadc1);
-			
+			printf("got ch3\n");
+
 			// Polling CHANNEL 04
 			HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY); 
 			adcValue4 = HAL_ADC_GetValue(&hadc1);
-			
+			printf("got ch4\n");
+
 			// Polling CHANNEL 05
 			HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY); 
 			adcValue5 = HAL_ADC_GetValue(&hadc1);
-			
+			printf("got ch5\n");
+
 			// Polling CHANNEL 06
 			HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY); 
 			adcValue6 = HAL_ADC_GetValue(&hadc1);
-			
+			printf("got ch6\n");
+
 			// Polling CHANNEL 07
 			HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY); 
 			adcValue7 = HAL_ADC_GetValue(&hadc1);
-			
+			printf("got ch7\n");
+
 			// Polling CHANNEL 08
 			HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY); 
 			adcValue8 = HAL_ADC_GetValue(&hadc1);
-		
+			printf("got ch8\n");
+
 		
 			//Stopping ADC1
 			HAL_ADC_Stop(&hadc1);	
-			
+			printf("stopped adc\n");
+
+			printf("adc1ch01: %d\n",adcValue1);
 			
 		     
             osDelay(PERIOD); // some delay

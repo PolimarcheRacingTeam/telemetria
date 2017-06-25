@@ -60,15 +60,15 @@
 
 /* USER CODE BEGIN Includes */
 
-//#include "inv_mpu.h"
-//#include "inv_mpu_dmp_motion_driver.h"
+#include "inv_mpu.h"
+#include "inv_mpu_dmp_motion_driver.h"
 //#include "databuffer.h"
-//#include "retarget.h"
-//#include "dashboard.h"
-//#include "telemetry.h"
-//#include "logging.h"
-//#include "imu.h"
-//#include "logging.c"
+#include "retarget.h"
+#include "dashboard.h"
+#include "telemetry.h"
+#include "logging.h"
+#include "imu.h"
+#include "logging.h"
 #include "adcSampling.h"
 /* USER CODE END Includes */
 
@@ -129,15 +129,15 @@ int main(void)
   MX_ADC1_Init();
 
   /* USER CODE BEGIN 2 */
-  //RetargetInit(&huart3); //per usare printf
-  printf("\n");
+  RetargetInit(&huart3); //per usare printf
+  printf("START\n");
 
   //imuInit();
 
   //setupBuffers();
   //testSDCard();
 	
-	osThreadDef(adc, samplingThread, osPriorityNormal, 0, 300);
+	osThreadDef(adc, samplingThread, osPriorityNormal, 0, 1000);
 	osThreadCreate(osThread(adc), NULL);
 
   /*

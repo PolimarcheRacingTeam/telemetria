@@ -5,6 +5,10 @@
  *      Author: Seb
  */
 
+#ifndef __logging_H
+#define __logging_H
+
+
 #include "fatfs.h"
 
 
@@ -115,3 +119,4 @@ static void testSDCard()
 	}
 }
 
+#endif
