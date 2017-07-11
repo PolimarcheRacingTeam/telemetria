@@ -1,1 +1,0 @@
- scrittura su SD

@@ -1,1 +1,0 @@
-prova_adc_temp_irq\startup_stm32f746xx.o: startup_stm32f746xx.s

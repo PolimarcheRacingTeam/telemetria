@@ -15,3 +15,12 @@ frequenze diverse in base ai canali?
 l'implementazione potrebbe essere complicata, 
 da valutare se stiamo stretti con le prestazioni
 
+Nucleo 
+192.168.1.40
+
+nc -ul 2017
+
+broadcast, cioè invio a tutti, per ricevere basta il bind
+
+ADC
+
