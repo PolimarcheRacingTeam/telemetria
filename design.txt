@@ -1,0 +1,74 @@
+Telemetry
+
+Our telemetry system is based on the Motec M800 ECU and an ST, 32 bit
+microcontroller (STM32F746ZG).
+
+The ECU gathers all data about the Engine, it also samples the front brake
+pressure and ETC signal lines as well as the wheel speed sensors for performing
+throttle control, traction control and launch control.
+
+There are 24 data channels from the ECU to be logged and some of these are also
+required to be read in realtime from the pits and viewed on the dashboard, they
+are transmitted via CAN bus and received by the MCU.
+
+Main MCU clock is at 216 MHz, this allows us to run a RealTime operating System
+(FREERTOS) which makes it easier to develop for the embedded platform and expand
+its functionality using multithreading.
+
+Some signals are sampled directly by the MCU:
+Sampling is at 100 Hz:
+
+- 5 analog channels:
+  4 sospension travel potentiometers (0-3.3V)
+  1 rear brake bressure (0-5V)
+  The MCU also has other ADC channels available on board, so by adding few lines
+  of C code and internal connections up to 24 analog signals can be sampled.
+
+- 6 axis Inertial Measurment Unit (Invensense MPU6050)
+  Connected over I2C, operates at 3V3
+  3 axis acceleration
+  3 axis angular velocity
+  built in DSP for filter and spacial orientation calculation (quaternion)
+
+All data is logged to the SD card at 100 Hz.
+
+The dashboard is updated at 10 Hz via a UART connection (4800 bps ) to display
+gear number and few significant engine parameters.
+
+Telemetry relies on a Wifi link based on two Ubiquity Networks Bullet M2
+Routers, one is stationary and acts as a HotSpot for clients, the other is
+mounted onboard of the vehicle and connected via a 100Mbit Ethernet Link to the
+STM32 microcontroller.
+
+The microcontroller is protected inside a weatherproof housing, 3D printed in
+____. Connections are made to the outside via a double TE AMP Superseal
+connector. Many pins are still unused, the large connectors where chosen to aid
+expandibility.
+The connectors are IP67 certified.
+
+Inside the housing lies the microcontroller board (ST Nucleo-stm32f746zg)
+mounted using the ST ZIO headers to our custom circuit board.
+
+The circuit board converts battery voltage to a reliable 5V supply of up to 3A
+by using LM2596 150 khz switching buck converter, which generates VERY LITTLE
+HEAT compared to traditional linear voltage regulators, this eliminates the need
+for ventilation holes.
+
+A low current supply of 3.3V is also generated using a linear regulator for
+powering potentiometers.
+
+An SD card is mounted internally and can only be extracted by opening the
+housing. To accomodate for the need of retrieving sampled data we have
+developed a Matlab script for downloading the data remotely.
+
+The microcontroller features a built in CAN controller, but requires a CAN
+transceiver for generating the differential signals in line with the protocol.
+We have chosen MCP2551 as they are the cheapest available in DIP package,
+unfortunately the market did not offer 3.3V DIP packaged transceivers at the
+time of designing.
+
+Initial design included Raspberry Pi single board computer connected via CAN,
+dedicated to logging and transmitting data for telemetry, accompanied by a
+smaller, less powerful, microcontroller board, the idea was abandoned in favor
+of the lower complexity of using a single more powerful microcontroller, with
+much shorter startup time and no operating system to be maintained.
