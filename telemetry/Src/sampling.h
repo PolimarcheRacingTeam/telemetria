@@ -39,9 +39,13 @@ static void samplingThread(void const *arg){
 	last = HAL_GetTick();
 	while(1){
 		now = HAL_GetTick();
-		if (now - last > 10) {
+		if (now%10) {
 			printf("late\n");
 			HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, 1);
+			do{
+				osDelay(1);
+				now = HAL_GetTick();
+			}while(now%10);
 		} else {
 			HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, 0);
 		}
