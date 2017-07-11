@@ -105,7 +105,7 @@ void loggingThread(const void* args){
 			osPoolFree(adcPool, adcmsg);
 		}
 		writeSD(line);
-		printf("%s\n", line);
+		//printf("%s\n", line); //per controllare gli adc su console
 
 		evt = osMessageGet(imuMsgBox, osWaitForever);  // wait for message
 		if (evt.status == osEventMessage) {
