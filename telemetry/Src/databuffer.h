@@ -13,6 +13,8 @@ https://www.keil.com/pack/doc/CMSIS/RTOS/html/group__CMSIS__RTOS__Message.html
 
 #include "cmsis_os.h"
 
+#define BUF_LEN 16
+
 typedef union{
 	struct{
 		int16_t rpm, map, air, lambda,
@@ -67,29 +69,29 @@ typedef struct  {
 	uint8_t rpm, gear, speed, engtemp, oilp, vbat, lambda, oilt;
 } dashData;
 
-osPoolDef(adcPool, 8, ADCData);                    // Define memory pool
+osPoolDef(adcPool, BUF_LEN, ADCData);                    // Define memory pool
 osPoolId  adcPool;
-osMessageQDef(adcMsgBox, 8, ADCData*); //Define message queue
+osMessageQDef(adcMsgBox, BUF_LEN, ADCData*); //Define message queue
 osMessageQId adcMsgBox;
 
-osPoolDef(imuPool, 8, IMUData);                    // Define memory pool
+osPoolDef(imuPool, BUF_LEN, IMUData);                    // Define memory pool
 osPoolId  imuPool;
-osMessageQDef(imuMsgBox, 8, IMUData*); //Define message queue
+osMessageQDef(imuMsgBox, BUF_LEN, IMUData*); //Define message queue
 osMessageQId imuMsgBox;
 
-osPoolDef(ecuPool, 8, ECUData);                    // Define memory pool
+osPoolDef(ecuPool, BUF_LEN, ECUData);                    // Define memory pool
 osPoolId  ecuPool;
-osMessageQDef(ecuMsgBox, 8, ECUData*); //Define message queue
+osMessageQDef(ecuMsgBox, BUF_LEN, ECUData*); //Define message queue
 osMessageQId ecuMsgBox;
 
-osPoolDef(telePool, 8, teleData);                    // Define memory pool
+osPoolDef(telePool, 4, teleData);                    // Define memory pool
 osPoolId  telePool;
-osMessageQDef(teleMsgBox, 8, teleData*); //Define message queue
+osMessageQDef(teleMsgBox, 4, teleData*); //Define message queue
 osMessageQId teleMsgBox;
 
-osPoolDef(dashPool, 8, dashData);                    // Define memory pool
+osPoolDef(dashPool, 4, dashData);                    // Define memory pool
 osPoolId  dashPool;
-osMessageQDef(dashMsgBox, 8, dashData*); //Define message queue
+osMessageQDef(dashMsgBox, 4, dashData*); //Define message queue
 osMessageQId dashMsgBox;
 
 uint8_t teleFlag = 0;
