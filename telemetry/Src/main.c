@@ -83,8 +83,6 @@ void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
-void blinkThread(void const *argument);
-
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
