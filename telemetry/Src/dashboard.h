@@ -45,6 +45,7 @@ void dashThread(void const *argument) {
 			dc.oilt = dashmsg->oilt;
 
 			HAL_UART_Transmit_DMA(&huart7, (uint8_t *) &dc, sizeof(dc));
+			osPoolFree(dashPool, dashmsg);
 			osDelay(DASH_UPDATE_PERIOD);
 		}
 
