@@ -88,14 +88,14 @@ static void samplingThread(void const *arg){
 
 			telemsg = osPoolAlloc(telePool);
 
-			telemsg->rpm = ecumsg->rpm;
+			telemsg->rpm = ecumsg->rpm / 100;
 			telemsg->map = ecumsg->map;
 			telemsg->lambda = ecumsg->lambda;
 			telemsg->tps = ecumsg->tps;
-			telemsg->engtemp = ecumsg->engtemp;
+			telemsg->engtemp = ecumsg->engtemp / 10;
 
-			telemsg->vbat = ecumsg->vbat;
-			telemsg->oilp = ecumsg->oilp;
+			telemsg->vbat = ecumsg->vbat / 10;
+			telemsg->oilp = ecumsg->oilp / 100;
 			telemsg->oilt = ecumsg->oilt;
 			telemsg->gear = ecumsg->gear;
 			telemsg->bse = ecumsg->bse;
@@ -106,7 +106,7 @@ static void samplingThread(void const *arg){
 			telemsg->rr = adcmsg->rr;
 			telemsg->rl = adcmsg->rl;
 
-			telemsg->speed = ecumsg->speed;
+			telemsg->speed = ecumsg->speed / 10;
 			telemsg->steer = adcmsg->A[0];
 			telemsg->a5 = 0;
 			telemsg->a6 = 0;
@@ -124,14 +124,14 @@ static void samplingThread(void const *arg){
 
 			dashmsg = osPoolAlloc(dashPool);
 
-			dashmsg->rpm = ecumsg->rpm;
+			dashmsg->rpm = ecumsg->rpm / 100;
 			dashmsg->gear = ecumsg->gear;
-			dashmsg->lambda = ecumsg->lambda;
-			dashmsg->speed = ecumsg->speed;
-			dashmsg->engtemp = ecumsg->engtemp;
-			dashmsg->vbat = ecumsg->vbat;
-			dashmsg->oilp = ecumsg->oilp;
-			dashmsg->oilt = ecumsg->oilt;
+			dashmsg->lambda = ecumsg->lambda >> 5;
+			dashmsg->speed = ecumsg->speed / 10;
+			dashmsg->engtemp = ecumsg->engtemp / 10;
+			dashmsg->vbat = ecumsg->vbat/ 10;
+			dashmsg->oilp = ecumsg->oilp  / 100;
+			dashmsg->oilt = ecumsg->oilt/ 10;
 
 			osMessagePut(dashMsgBox, (uint32_t)dashmsg, osWaitForever);
 		}
