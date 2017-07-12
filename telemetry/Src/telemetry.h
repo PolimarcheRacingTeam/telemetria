@@ -52,7 +52,6 @@ static void telemetryThread(void const *arg){
 		telecnt ++;
 		if (evt.status == osEventMessage) {
 			telemsg = evt.value.p;
-			//printf("TX: ax=%d\n", telemsg->ax);
 			buf = netbuf_new();
 			packet = netbuf_alloc(buf, sizeof(teleData));
 			memcpy (packet, telemsg, sizeof (teleData));
