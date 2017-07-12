@@ -23,10 +23,10 @@ typedef union{
 		bse, tps2, tpd1, tpd2;
 	};
 	struct {
-		uint8_t p2[4];
-		uint8_t p3[4];
-		uint8_t p4[4];
-		uint8_t p5[4];
+		int16_t p2[4];
+		int16_t p3[4];
+		int16_t p4[4];
+		int16_t p5[4];
 	};
 	struct {
 		uint8_t id2[8];
@@ -66,7 +66,7 @@ typedef struct {
 
 typedef struct  {
 	uint8_t header;
-	uint8_t rpm, gear, speed, engtemp, oilp, vbat, lambda, oilt;
+	int8_t rpm, gear, speed, engtemp, oilp, vbat, lambda, oilt;
 } dashData;
 
 osPoolDef(adcPool, BUF_LEN, ADCData);                    // Define memory pool
@@ -84,14 +84,14 @@ osPoolId  ecuPool;
 osMessageQDef(ecuMsgBox, BUF_LEN, ECUData*); //Define message queue
 osMessageQId ecuMsgBox;
 
-osPoolDef(telePool, 4, teleData);                    // Define memory pool
+osPoolDef(telePool, 8, teleData);                    // Define memory pool
 osPoolId  telePool;
-osMessageQDef(teleMsgBox, 4, teleData*); //Define message queue
+osMessageQDef(teleMsgBox, 8, teleData*); //Define message queue
 osMessageQId teleMsgBox;
 
-osPoolDef(dashPool, 4, dashData);                    // Define memory pool
+osPoolDef(dashPool, 8, dashData);                    // Define memory pool
 osPoolId  dashPool;
-osMessageQDef(dashMsgBox, 4, dashData*); //Define message queue
+osMessageQDef(dashMsgBox, 8, dashData*); //Define message queue
 osMessageQId dashMsgBox;
 
 uint8_t teleFlag = 0;
