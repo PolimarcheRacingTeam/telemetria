@@ -17,6 +17,7 @@
 __IO uint16_t rawADC[6];
 ECUData ed;
 uint32_t now, last;
+HAL_StatusTypeDef canret;
 
 /* thread per campionare i canali analogici */
 static void samplingThread(void const *arg){
@@ -61,28 +62,38 @@ static void samplingThread(void const *arg){
 		}
 
 		adcmsg->millis = now;
+		uint32_t id;
+		uint8_t flags = 0;
 
-		while(HAL_CAN_Receive(&hcan1,CAN_FIFO0, 0) != HAL_TIMEOUT){
-			switch (hcan1.pRxMsg->StdId){
-			case 0x002: format(ed.id2, hcan1.pRxMsg->Data, 8);
-			printf("a");
-			break;
-			case 0x003: format(ed.id3, hcan1.pRxMsg->Data, 8);
-			printf("b");
+		while(1){
+			canret = HAL_CAN_Receive(&hcan1,CAN_FIFO0, 0) ;
+			if (canret == HAL_TIMEOUT) break;
+			//if (flags == 15) break;
+			id = hcan1.pRxMsg->StdId;
+			if(id==0x002){
+				format(ed.id2, hcan1.pRxMsg->Data, 8);
+				//printf("a");
+				flags |= 1;
+			} else if (id == 0x003){
+				format(ed.id3, hcan1.pRxMsg->Data, 8);
+				flags |= 2;
 
-			break;
-			case 0x004: format(ed.id4, hcan1.pRxMsg->Data, 8);
-			printf("c");
+				//printf("b");
+			} else if (id == 0x004){
+				format(ed.id4, hcan1.pRxMsg->Data, 8);
+				flags |= 4;
 
-			break;
-			case 0x005: format(ed.id5, hcan1.pRxMsg->Data, 8);
-			printf("d");
-
-			break;
+				//printf("c");
+			} else if(id == 0x005){
+				format(ed.id5, hcan1.pRxMsg->Data, 8);
+				flags |= 8;
+				//printf("d");
+			} else {
+				//printf("z");
 			}
 
 		}
-		printf("\n");
+		//printf("\n");
 
 
 		if(mpu_get_accel_reg(imumsg->a, NULL)){
@@ -92,6 +103,7 @@ static void samplingThread(void const *arg){
 		}
 		osMessagePut(imuMsgBox, (uint32_t)imumsg, osWaitForever);
 		memcpy(ecumsg, &ed, sizeof(ECUData));
+		//if(ecumsg->gear == 0) while(1);
 		osMessagePut(ecuMsgBox, (uint32_t)ecumsg, osWaitForever);
 		osMessagePut(adcMsgBox, (uint32_t)adcmsg, osWaitForever);
 

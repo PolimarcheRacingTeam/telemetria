@@ -75,7 +75,7 @@ void MX_CAN1_Init(void)
   hcan1.Init.ABOM = DISABLE;
   hcan1.Init.AWUM = DISABLE;
   hcan1.Init.NART = DISABLE;
-  hcan1.Init.RFLM = DISABLE;
+  hcan1.Init.RFLM = ENABLE;
   hcan1.Init.TXFP = DISABLE;
   if (HAL_CAN_Init(&hcan1) != HAL_OK)
   {

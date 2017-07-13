@@ -138,16 +138,16 @@ int main(void)
 
   setupBuffers();
 
-  osThreadDef(telemetry, telemetryThread, osPriorityNormal, 0, 1024);
+  osThreadDef(telemetry, telemetryThread, osPriorityNormal, 0, 2048);
   osThreadCreate(osThread(telemetry), NULL);
 
   osThreadDef(log, loggingThread, osPriorityNormal, 0, 1024);
   osThreadCreate(osThread(log), NULL);
 
-  osThreadDef(dash, dashThread, osPriorityNormal, 0, 256);
+  osThreadDef(dash, dashThread, osPriorityNormal, 0, 512);
   osThreadCreate(osThread(dash), NULL);
 
-  osThreadDef(sampling, samplingThread, osPriorityHigh, 0, 128);
+  osThreadDef(sampling, samplingThread, osPriorityHigh, 0, 512);
   osThreadCreate(osThread(sampling), NULL);
 
   /* USER CODE END 2 */
