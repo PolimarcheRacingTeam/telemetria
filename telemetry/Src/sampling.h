@@ -15,6 +15,7 @@
 #define ADC_PERIOD 10 // ms between samples
 
 __IO uint16_t rawADC[6];
+ECUData ed;
 uint32_t now, last;
 
 /* thread per campionare i canali analogici */
@@ -63,16 +64,26 @@ static void samplingThread(void const *arg){
 
 		while(HAL_CAN_Receive(&hcan1,CAN_FIFO0, 0) != HAL_TIMEOUT){
 			switch (hcan1.pRxMsg->StdId){
-			case 0x002: format(ecumsg->id2, hcan1.pRxMsg->Data, 8);
+			case 0x002: format(ed.id2, hcan1.pRxMsg->Data, 8);
+			printf("a");
 			break;
-			case 0x003: format(ecumsg->id3, hcan1.pRxMsg->Data, 8);
+			case 0x003: format(ed.id3, hcan1.pRxMsg->Data, 8);
+			printf("b");
+
 			break;
-			case 0x004: format(ecumsg->id4, hcan1.pRxMsg->Data, 8);
+			case 0x004: format(ed.id4, hcan1.pRxMsg->Data, 8);
+			printf("c");
+
 			break;
-			case 0x005: format(ecumsg->id5, hcan1.pRxMsg->Data, 8);
+			case 0x005: format(ed.id5, hcan1.pRxMsg->Data, 8);
+			printf("d");
+
 			break;
 			}
+
 		}
+		printf("\n");
+
 
 		if(mpu_get_accel_reg(imumsg->a, NULL)){
 			imumsg->ax = 0;
@@ -80,6 +91,7 @@ static void samplingThread(void const *arg){
 			imumsg->az = 0;
 		}
 		osMessagePut(imuMsgBox, (uint32_t)imumsg, osWaitForever);
+		memcpy(ecumsg, &ed, sizeof(ECUData));
 		osMessagePut(ecuMsgBox, (uint32_t)ecumsg, osWaitForever);
 		osMessagePut(adcMsgBox, (uint32_t)adcmsg, osWaitForever);
 
@@ -88,17 +100,17 @@ static void samplingThread(void const *arg){
 
 			telemsg = osPoolAlloc(telePool);
 
-			telemsg->rpm = ecumsg->rpm / 100;
-			telemsg->map = ecumsg->map;
-			telemsg->lambda = ecumsg->lambda;
-			telemsg->tps = ecumsg->tps;
-			telemsg->engtemp = ecumsg->engtemp / 10;
+			telemsg->rpm = ed.rpm / 100;
+			telemsg->map = ed.map;
+			telemsg->lambda = ed.lambda;
+			telemsg->tps = ed.tps;
+			telemsg->engtemp = ed.engtemp / 10;
 
-			telemsg->vbat = ecumsg->vbat / 10;
-			telemsg->oilp = ecumsg->oilp / 100;
-			telemsg->oilt = ecumsg->oilt;
-			telemsg->gear = ecumsg->gear;
-			telemsg->bse = ecumsg->bse;
+			telemsg->vbat = ed.vbat / 10;
+			telemsg->oilp = ed.oilp / 100;
+			telemsg->oilt = ed.oilt;
+			telemsg->gear = ed.gear;
+			telemsg->bse = ed.bse;
 
 			telemsg->rearbrake = adcmsg->rearbrake;
 			telemsg->fr = adcmsg->fr;
@@ -106,7 +118,7 @@ static void samplingThread(void const *arg){
 			telemsg->rr = adcmsg->rr;
 			telemsg->rl = adcmsg->rl;
 
-			telemsg->speed = ecumsg->speed / 10;
+			telemsg->speed = ed.speed / 10;
 			telemsg->steer = adcmsg->A[0];
 			telemsg->a5 = 0;
 			telemsg->a6 = 0;
@@ -124,14 +136,14 @@ static void samplingThread(void const *arg){
 
 			dashmsg = osPoolAlloc(dashPool);
 
-			dashmsg->rpm = ecumsg->rpm / 100;
-			dashmsg->gear = ecumsg->gear;
-			dashmsg->lambda = ecumsg->lambda >> 5;
-			dashmsg->speed = ecumsg->speed / 10;
-			dashmsg->engtemp = ecumsg->engtemp / 10;
-			dashmsg->vbat = ecumsg->vbat/ 10;
-			dashmsg->oilp = ecumsg->oilp  / 100;
-			dashmsg->oilt = ecumsg->oilt/ 10;
+			dashmsg->rpm = ed.rpm / 100;
+			dashmsg->gear = ed.gear;
+			dashmsg->lambda = ed.lambda >> 5;
+			dashmsg->speed = ed.speed / 10;
+			dashmsg->engtemp = ed.engtemp / 10;
+			dashmsg->vbat = ed.vbat/ 10;
+			dashmsg->oilp = ed.oilp  / 100;
+			dashmsg->oilt = ed.oilt/ 10;
 
 			osMessagePut(dashMsgBox, (uint32_t)dashmsg, osWaitForever);
 		}
