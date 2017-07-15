@@ -44,7 +44,8 @@ void dashThread(void const *argument) {
 			dc.lambda = dashmsg->lambda;
 			dc.oilt = dashmsg->oilt;
 
-			HAL_UART_Transmit_DMA(&huart7, (uint8_t *) &dc, sizeof(dc));
+			//HAL_UART_Transmit_DMA(&huart7, (uint8_t *) &dc, sizeof(dc));
+			HAL_UART_Transmit(&huart7, (uint8_t *) &dc, sizeof(dc), HAL_MAX_DELAY);
 			osPoolFree(dashPool, dashmsg);
 			osDelay(DASH_UPDATE_PERIOD);
 		}
@@ -52,5 +53,10 @@ void dashThread(void const *argument) {
 	}
 	osThreadTerminate(NULL);
 }
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart){
+	printf("uart dma error\n");
+}
+
 
 #endif

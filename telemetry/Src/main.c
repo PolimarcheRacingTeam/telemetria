@@ -147,7 +147,7 @@ int main(void)
   osThreadDef(dash, dashThread, osPriorityNormal, 0, 256);
   osThreadCreate(osThread(dash), NULL);
 
-  osThreadDef(sampling, samplingThread, osPriorityHigh, 0, 128);
+  osThreadDef(sampling, samplingThread, osPriorityHigh, 0, 512);
   osThreadCreate(osThread(sampling), NULL);
 
   /* USER CODE END 2 */
