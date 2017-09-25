@@ -68,7 +68,7 @@ static void samplingThread(void const *arg){
 		while(1){
 			canret = HAL_CAN_Receive(&hcan1,CAN_FIFO0, 0) ;
 			if (canret == HAL_TIMEOUT) break;
-			//if (flags == 15) break;
+			if (flags == 15) break;
 			id = hcan1.pRxMsg->StdId;
 			if(id==0x002){
 				format(ed.id2, hcan1.pRxMsg->Data, 8);
@@ -93,7 +93,7 @@ static void samplingThread(void const *arg){
 			}
 
 		}
-		//printf("\n");
+		printf("%d\n",flags);
 
 
 		if(mpu_get_accel_reg(imumsg->a, NULL)){

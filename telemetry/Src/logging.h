@@ -124,6 +124,7 @@ void loggingThread(const void* args){
 					ecumsg->p3[0],ecumsg->p3[1],ecumsg->p3[2],ecumsg->p3[3],
 					ecumsg->p4[0],ecumsg->p4[1],ecumsg->p4[2],ecumsg->p4[3],
 					ecumsg->p5[0],ecumsg->p5[1],ecumsg->p5[2],ecumsg->p5[3]);
+			printf("%d\n",ecumsg->tps);
 
 			osPoolFree(ecuPool, ecumsg);
 		}
